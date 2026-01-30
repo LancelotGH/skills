@@ -103,3 +103,30 @@ pip install python-docx openpyxl
 ```
 
 确保在使用前已安装这些依赖。
+
+---
+
+### 4. convert_md_v2.py - Markdown转Word工具
+
+**用途**：将 Markdown 文档转换为 Word (.docx) 格式，支持中文优化和表格/图片/代码块渲染。
+
+**使用方法**：
+```bash
+python convert_md_v2.py <input.md> <output.docx>
+```
+
+**参数**：
+- `input`：输入的 Markdown 文件路径
+- `output`：输出的 Word 文件路径
+
+**特性**：
+- 自动设置中文字体（正文宋体，标题黑体）
+- 支持表格及其边框央视
+- 支持代码块和列表
+- 支持加粗等行内样式
+
+**示例**：
+```bash
+python convert_md_v2.py "../docs/design.md" "../docs/design.docx"
+```
+

@@ -58,6 +58,22 @@ python generate_doc.py --name "七日签到" --type "activity"
 
 你只需要根据实际功能需求填充各章节内容即可。
 
+
+### 5. 导出为Word（推荐）
+
+如果使用AI助手生成了 Markdown 格式的文档，可以使用 `convert_md_v2.py` 脚本将其转换为格式排版精美的 Word 文档：
+
+```bash
+cd scripts
+python convert_md_v2.py "你的文档路径.md" "输出文档路径.docx"
+```
+
+该工具会自动处理：
+- 中文字体（宋体/黑体）
+- 表格样式
+- 标题层级
+- 代码块格式
+
 ## 文档结构
 
 标准文档包含4个核心章节：
