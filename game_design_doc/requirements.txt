@@ -1,0 +1,10 @@
+# Python脚本依赖包
+
+# Word文档读取（read_docx.py）
+python-docx>=0.8.11
+
+# Excel文件读取（read_xlsx.py）
+openpyxl>=3.0.0
+
+# Word文档生成（generate_doc.py）
+python-docx>=0.8.11
