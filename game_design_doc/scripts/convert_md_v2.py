@@ -26,25 +26,44 @@ class MarkdownToDocx:
         for i in range(1, 10):
             if f'Heading {i}' in self.doc.styles:
                 h_style = self.doc.styles[f'Heading {i}']
-                h_style.font.name = '黑体'
-                h_style.element.rPr.rFonts.set(qn('w:eastAsia'), '黑体')
+                h_style.font.name = '微软雅黑'
+                h_style.element.rPr.rFonts.set(qn('w:eastAsia'), '微软雅黑')
                 h_style.font.color.rgb = RGBColor(0, 0, 0) # 黑色
+                h_style.font.bold = True
+
 
     def parse_inline_styles(self, paragraph, text):
-        """解析行内样式：**Bold**"""
-        # 简单的加粗解析
-        parts = re.split(r'(\*\*.*?\*\*)', text)
+        """解析行内样式：**Bold**, *Italic*"""
+        # 使用更复杂的正则同时匹配 **bold** 和 *italic*
+        # 注意：这里简单的实现不支持嵌套
+        parts = re.split(r'(\*\*.*?\*\*|\*[^*]+?\*)', text)
+        
         for part in parts:
+            if not part:
+                continue
+                
             if part.startswith('**') and part.endswith('**'):
-                run = paragraph.add_run(part[2:-2])
-                run.font.bold = True
-                run.font.name = '宋体'
-                run.element.rPr.rFonts.set(qn('w:eastAsia'), '宋体')
-            else:
-                if part:
-                    run = paragraph.add_run(part)
+                # 加粗 (Bold)
+                content = part[2:-2]
+                if content:
+                    run = paragraph.add_run(content)
+                    run.font.bold = True
                     run.font.name = '宋体'
                     run.element.rPr.rFonts.set(qn('w:eastAsia'), '宋体')
+            elif part.startswith('*') and part.endswith('*'):
+                # 斜体 (Italic) -> 映射为楷体 (KaiTi)
+                content = part[1:-1]
+                if content:
+                    run = paragraph.add_run(content)
+                    # run.font.italic = True # 不使用斜体，而是使用楷体
+                    run.font.name = '楷体' 
+                    run.element.rPr.rFonts.set(qn('w:eastAsia'), '楷体')
+            else:
+                # 普通文本
+                run = paragraph.add_run(part)
+                run.font.name = '宋体'
+                run.element.rPr.rFonts.set(qn('w:eastAsia'), '宋体')
+
 
     def convert(self):
         with open(self.input_file, 'r', encoding='utf-8') as f:
@@ -136,16 +155,34 @@ class MarkdownToDocx:
             row_cells = table.rows[i].cells
             for j, cell_text in enumerate(row_data):
                 if j < len(row_cells):
-                    cell_cells = row_cells[j]
-                    # cell_cells.text = cell_text # 这样会失去字体设置
-                    # 使用 paragraph 添加以保持字体
-                    p = cell_cells.paragraphs[0]
+                    cell = row_cells[j]
+                    # 清除可能默认存在的段落
+                    # cell.text = "" 
+                    # 应该保留第一个段落但清空内容，或者直接获取第一个段落
+                    if not cell.paragraphs:
+                        p = cell.add_paragraph()
+                    else:
+                        p = cell.paragraphs[0]
+                        p.clear() # 清空内容
+                        
                     self.parse_inline_styles(p, cell_text)
                     
-                    # 第一行加粗 (假设是表头)
+                    # 第一行 (表头) 样式优化
                     if i == 0:
+                        # 背景色 (灰色)
+                        tcPr = cell._element.get_or_add_tcPr()
+                        shd = OxmlElement('w:shd')
+                        shd.set(qn('w:val'), 'clear')
+                        shd.set(qn('w:color'), 'auto')
+                        shd.set(qn('w:fill'), 'F2F2F2') # 浅灰色背景
+                        tcPr.append(shd)
+                        
+                        # 字体加粗 + 微软雅黑
                         for run in p.runs:
                             run.font.bold = True
+                            run.font.name = '微软雅黑'
+                            run.element.rPr.rFonts.set(qn('w:eastAsia'), '微软雅黑')
+
 
 def main():
     parser = argparse.ArgumentParser(description='Convert Markdown to Docx (Custom)')

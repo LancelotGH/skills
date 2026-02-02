@@ -10,6 +10,7 @@ from docx import Document
 from docx.shared import Pt, RGBColor, Inches
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.oxml.ns import qn
+from docx.oxml import OxmlElement
 import os
 from datetime import datetime
 
@@ -35,6 +36,14 @@ class GameDocGenerator:
         """添加标题"""
         heading = self.doc.add_heading(text, level=level)
         heading.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+        
+        # 强制设置标题字体为微软雅黑+加粗
+        for run in heading.runs:
+            run.font.name = '微软雅黑'
+            run.element.rPr.rFonts.set(qn('w:eastAsia'), '微软雅黑')
+            run.font.bold = True
+            run.font.color.rgb = RGBColor(0, 0, 0)
+            
         return heading
     
     def _add_paragraph(self, text, style=None):
@@ -54,10 +63,19 @@ class GameDocGenerator:
         header_cells = table.rows[0].cells
         for i, header in enumerate(headers):
             header_cells[i].text = header
-            # 表头加粗
+            # 表头加粗 + 背景色 + 微软雅黑
+            tcPr = header_cells[i]._element.get_or_add_tcPr()
+            shd = OxmlElement('w:shd')
+            shd.set(qn('w:val'), 'clear')
+            shd.set(qn('w:color'), 'auto')
+            shd.set(qn('w:fill'), 'F2F2F2') # 浅灰色背景
+            tcPr.append(shd)
+
             for paragraph in header_cells[i].paragraphs:
                 for run in paragraph.runs:
                     run.font.bold = True
+                    run.font.name = '微软雅黑'
+                    run.element.rPr.rFonts.set(qn('w:eastAsia'), '微软雅黑')
         
         # 填充数据
         if rows_data:
