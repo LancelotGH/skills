@@ -1,6 +1,6 @@
 ---
 name: Markdown 文档排版规范 (Markdown Format Standard)
-description: 用于规范和统一项目内所有Markdown文档的排版格式，确保渲染、编辑以及转化为 Word 文档时的严格兼容性。
+description: 用于规范和统一项目内所有Markdown文档的排版格式，确保渲染、编辑以及转化为 Word 文档时的严格兼容性。当用户要求创建、修改或整理任何 Markdown 文档时，应使用此 skill 确保排版规范。
 ---
 
 # 标准 Markdown 格式化规范

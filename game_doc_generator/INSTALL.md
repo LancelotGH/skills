@@ -19,7 +19,8 @@ game_design_skills/              # 整体打包后的目录名
 │   ├── examples/                # 示例文档
 │   └── prompts/
 ├── game_doc_template/           # 文档结构模板
-│   └── SKILL.md
+│   ├── SKILL.md
+│   └── references/              # 详细模板（C/S逻辑、界面流程）
 ├── game_rule_writing/           # 规则编写规范
 │   └── SKILL.md
 ├── game_config_table/           # 配置表设计指南
