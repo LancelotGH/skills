@@ -18,15 +18,7 @@ AI 会自动执行以下流程：
 
 **默认输出**：AI 助手直接生成 markdown 格式（.md）文档
 
-**如需 Word 格式**：
-```bash
-cd scripts
-python generate_doc.py --name "功能名称" --type "system"
-```
-
-**参数说明**：
-- `--name`：功能名称（必填）
-- `--type`：功能类型（必填），可选：system / building / activity / other
+**如需 Word 格式**：使用 `md_to_word` skill 转换。
 
 ### 3. 查看示例
 
@@ -38,10 +30,7 @@ python generate_doc.py --name "功能名称" --type "system"
 
 ### 4. 导出为 Word
 
-```bash
-cd scripts
-python convert_md_v2.py "文档路径.md" "输出路径.docx"
-```
+使用 `md_to_word` skill 转换。
 
 ## 关联 Skill
 
@@ -65,5 +54,4 @@ python convert_md_v2.py "文档路径.md" "输出路径.docx"
 
 如果模板不符合你的需求，可以：
 1. 修改对应 skill 的 `SKILL.md` 调整规范和模板
-2. 修改 `scripts/generate_doc.py` 定制生成逻辑
-3. 在 `examples` 中添加新的示例类型
+2. 在 `examples` 中添加新的示例类型

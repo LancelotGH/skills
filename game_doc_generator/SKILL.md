@@ -1,5 +1,5 @@
 ---
-name: 游戏功能开发文档生成器
+name: game_doc_generator
 description: 从用户提供的游戏功能需求文档（txt/md/doc/xlsx/脑图）生成专业的游戏功能开发文档，包含详细规则、数值配置、系统依赖和配置表设计。当用户提到游戏策划案、功能设计文档、需求转开发文档、生成功能设计文档，或者上传了任何游戏相关的需求文档（txt/md/doc/xlsx/脑图）时，请使用此 skill。即使用户只是简单描述了某个游戏功能的想法或玩法构思，也应考虑使用此 skill 来生成规范的设计文档。
 ---
 
@@ -261,7 +261,7 @@ AI助手（你）应该：
 
 生成的文档默认为markdown格式（.md），便于版本控制和团队协作。
 
-**备选格式：Word文档** — 使用 `scripts/generate_doc.py` 脚本生成。
+**备选格式：Word文档** — 使用 `md_to_word` skill 转换。
 
 📖 生成完成后，必须执行 `game_doc_quality` skill 中的质量检查清单（模块A）。
 
@@ -354,26 +354,9 @@ AI助手（你）应该：
 
 ---
 
-## 生成脚本说明
+## Word 文档生成
 
-`scripts/generate_doc.py`提供了快速生成文档框架的功能：
-
-**基础用法**：
-```bash
-python generate_doc.py --name "功能名称" --type "system"
-```
-
-**参数说明**：
-- `--name`：功能名称（必填）
-- `--type`：功能类型，可选值：system/building/activity/other（必填）
-- `--output`：输出路径（可选，默认为当前目录）
-
-**脚本功能**：
-- 自动创建包含标准章节结构的Word文档
-- 根据功能类型调整章节（例如建筑类型会添加建筑特定规则）
-- 预填充章节标题和基础表格模板
-
-生成文档后，根据实际需求填充内容即可。
+需要将 .md 文档导出为 Word 格式时，使用 `md_to_word` skill。
 
 ---
 

@@ -35,14 +35,9 @@ AI 会自动：
 - **规则评审**："帮我优化这段规则描述"
 - **模板查阅**："文档应该包含哪些章节"
 
-### Word 文档生成（可选）
+### Word 文档生成
 
-如需将 Markdown 文档转换为 Word 格式：
-
-```bash
-cd game_doc_generator/scripts
-python convert_md_v2.py "文档路径.md" "输出路径.docx"
-```
+如需将 Markdown 文档转换为 Word 格式，使用 `md_to_word` skill。
 
 ## 两种文档模式
 
@@ -61,10 +56,3 @@ python convert_md_v2.py "文档路径.md" "输出路径.docx"
 - **example_building.md** - 建筑功能示例
 - **example_activity.md** - 活动功能示例
 
-## 技术要求
-
-**Python 脚本（可选）**：
-- Python 3.6+
-- 安装依赖：`pip install -r game_doc_generator/requirements.txt`
-
-**注意**：Python 仅用于 Word 生成脚本，AI 使用 skill 本身不需要 Python。

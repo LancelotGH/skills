@@ -169,8 +169,7 @@
 - 代码块使用triple backticks
 
 **备选：Word格式**
-- 如果用户明确要求Word格式，可以使用`generate_doc.py`脚本
-- 或提供markdown内容，让用户自行转换
+- 如果用户明确要求Word格式，使用 `md_to_word` skill 转换
 
 ### 灵活的章节结构
 
