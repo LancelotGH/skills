@@ -258,5 +258,23 @@ def eradicate_italics(document):
 
 eradicate_italics(doc)
 
+# 5. Color entire list-item line: ✓ → green, ✗ → red
+def style_status_markers(document):
+    DONE_COLOR = RGBColor(39, 174, 96)   # green
+    TODO_COLOR = RGBColor(192, 57, 43)   # red
+
+    for paragraph in document.paragraphs:
+        ptext = paragraph.text.strip()
+        if ptext.startswith('✓'):
+            color = DONE_COLOR
+        elif ptext.startswith('✗'):
+            color = TODO_COLOR
+        else:
+            continue
+        for run in paragraph.runs:
+            run.font.color.rgb = color
+
+style_status_markers(doc)
+
 doc.save(output_docx)
 print(f"Optimization complete for {output_docx}.")

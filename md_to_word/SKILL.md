@@ -1,34 +1,38 @@
 ---
 name: md_to_word
-description: 将项目开发文档目录下的 Markdown 文件转换为 Word（.docx）格式。当用户要求"生成 word"、"导出 word"、"转换为 word"或类似操作时使用此 skill。
+description: 将 Markdown 文件导出为 Word（.docx）文档。全程离线，使用项目内置脚本，支持中文排版、标题样式、表格和列表正确渲染。当用户说"导出 Word""转成 word""生成 word 文件"时触发。
 ---
 
-# Markdown 转 Word 工具
+# Markdown 转 Word
 
 ## 工具说明
 
-项目内置了专用的 Markdown → Word 转换脚本，支持中文排版、标题样式、表格和列表的正确渲染。
+| 项目 | 路径 |
+|------|------|
+| 脚本 | `.agent/skills/md_to_word/generate_word_docs.py` |
+| Python | `g:/zmd works/AIPartner/.venv/Scripts/python.exe` |
+| 外部依赖 | 无（python-docx 已在 .venv 中安装） |
 
-- **脚本路径**：`g:/zmd works/AIPartner/.agent/skills/md_to_word/generate_word_docs.py`
-- **Python 路径**：`g:/zmd works/AIPartner/.venv/Scripts/python.exe`
+输出文件与源文件同目录同名，扩展名改为 `.docx`。
 
 ## 使用方法
 
-**转换单个文件**：
+脚本运行时**必须先 cd 到 .md 文件所在目录**，再传入文件名（不含路径）：
 
 ```bash
-cd "g:/zmd works/AIPartner/开发文档"
-"g:/zmd works/AIPartner/.venv/Scripts/python.exe" "g:/zmd works/AIPartner/.agent/skills/md_to_word/generate_word_docs.py" "文件名.md"
+cd "<md文件所在目录>"
+"g:/zmd works/AIPartner/.venv/Scripts/python.exe" "g:/zmd works/AIPartner/.agent/skills/md_to_word/generate_word_docs.py" "<文件名.md>"
 ```
 
-**转换当前目录下全部 .md 文件**（双击运行）：
+**示例**：
 
-```
-g:/zmd works/AIPartner/开发文档/将当前目录md转word.bat
+```bash
+cd "g:/zmd works/AIPartner/框架"
+"g:/zmd works/AIPartner/.venv/Scripts/python.exe" "g:/zmd works/AIPartner/.agent/skills/md_to_word/generate_word_docs.py" "心情系统.md"
 ```
 
 ## 注意事项
 
-- 脚本执行时必须 `cd` 到 .md 文件所在目录，再传入文件名（不含路径）。
-- 输出的 .docx 文件与 .md 文件同名、同目录。
+- 必须 cd 到文件所在目录再执行，不能传绝对路径作为参数。
 - 脚本会自动修复常见的 Markdown 格式问题（缺失空行、前置空格等）再执行转换。
+- 完全离线，不依赖任何外部服务或网络。
